@@ -4,6 +4,7 @@
 import pandas as pd
 import zipfile
 import os
+import numpy
 
 # create dataframe with name df from file
 df = pd.read_csv('data/winemag-data-130k-v2.csv.zip',compression='zip')
@@ -41,7 +42,12 @@ dfFinal.set_index('country', inplace=True)
 # Sorting rows based off of count column value in descending order
 dfFinal.sort_values('count', inplace=True, ascending=False)
 # formatting float data types to one decimal point so points column shows as directed
-pd.options.display.float_format = '{:,.1f}'.format
+#dfFinal = dfFinal.round(1)
+dfFinal = dfFinal.astype(float).round(1)
+#print(dfFinal)
+
+#pd.options.display.float_format = '{:,.1f}'.format
+#print(dfFinal)
 
 dir_path = os.path.dirname(os.path.realpath('reviews.ipynb'))
 dfFinal.to_csv(dir_path + '/data/reviews-per-country.csv')
